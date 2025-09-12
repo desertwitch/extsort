@@ -28,6 +28,9 @@ func toBytesString(s string) ([]byte, error) {
 // This function provides backward compatibility with the legacy string-specific API.
 func Strings(input <-chan string, config *Config) (*StringSorter, <-chan string, <-chan error) {
 	genericSorter, output, errChan := Generic(input, fromBytesString, toBytesString, cmp.Compare, config)
+	if genericSorter == nil {
+		return nil, output, errChan
+	}
 	s := &StringSorter{GenericSorter: *genericSorter}
 	return s, output, errChan
 }

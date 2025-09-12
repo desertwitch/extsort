@@ -77,6 +77,10 @@ func New(input <-chan SortType, fromBytes FromBytes, lessFunc CompareLessFunc, c
 	compareGeneric := makeCompareSortType(lessFunc)
 
 	genericSorter, output, errChan := Generic(input, fromBytesGeneric, sortTypeToBytes, compareGeneric, config)
+	if genericSorter == nil {
+		return nil, output, errChan
+	}
+
 	s := &SortTypeSorter{GenericSorter: *genericSorter}
 	return s, output, errChan
 }

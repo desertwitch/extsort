@@ -164,6 +164,7 @@ func Generic[E any](input <-chan E, fromBytes FromBytesGeneric[E], toBytes ToByt
 		s.mergeErrChan <- err
 		close(s.mergeErrChan)
 		close(s.mergeChunkChan)
+		return nil, s.mergeChunkChan, s.mergeErrChan
 	}
 	return s, s.mergeChunkChan, s.mergeErrChan
 }
